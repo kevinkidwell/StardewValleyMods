@@ -18,7 +18,7 @@ namespace CustomSpouseRooms
         public static IModHelper SHelper;
         public static ModConfig Config;
         
-        public static string dictPath = "aedenthorn.CustomSpouseRooms/dict";
+        public static string dictPath = "kevinkidwell.CustomSpouseRooms/dict";
 
         public static Dictionary<string, int> roomIndexes = new Dictionary<string, int>{
             { "Abigail", 0 },

@@ -50,6 +50,7 @@ namespace CustomSpouseRooms
                 }
             }
             return spouses;
+            SMonitor.Log($"Spouses: {spouses}");
         }
 
         public static void ExtendMap(GameLocation location, int w, int h)
@@ -92,7 +93,8 @@ namespace CustomSpouseRooms
 			SMonitor.Log($"Checking spouse thing for {srd.name}");
 			if (srd.name == "Emily" && (srd.templateName == "Emily" || srd.templateName == null || srd.templateName == ""))
 			{
-				fh.temporarySprites.RemoveAll((s) => s is EmilysParrot);
+				// Caused an error, commented out to get to run for now
+				// fh.temporarySprites.RemoveAll((s) => s is EmilysParrot);
 
 				Vector2 spot = Utility.PointToVector2(srd.startPos + new Point(4, 2)) * 64;
 				spot += new Vector2(16, 32);

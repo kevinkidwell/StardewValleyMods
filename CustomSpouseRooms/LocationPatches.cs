@@ -47,8 +47,10 @@ namespace CustomSpouseRooms
 				return true;
 			foreach(var room in ModEntry.currentRoomData.Values)
             {
-                Rectangle rect = new Rectangle(room.startPos.X + 1, room.startPos.Y + 1, (__instance as FarmHouse).GetSpouseRoomWidth(), (__instance as FarmHouse).GetSpouseRoomHeight());
-				if (rect.Contains(x, y))
+                Rectangle rect = new Rectangle(room.startPos.X + 1, room.startPos.Y + 1, 6, 9);
+				// Original code commented out, width and height calls were throwing errors. Trying default values to get to load
+                // Rectangle rect = new Rectangle(room.startPos.X + 1, room.startPos.Y + 1, (__instance as FarmHouse).GetSpouseRoomWidth(), (__instance as FarmHouse).GetSpouseRoomHeight());
+                if (rect.Contains(x, y))
                 {
 					__result = true;
 					return false;
@@ -294,16 +296,21 @@ namespace CustomSpouseRooms
 				}
 			}
 
-            Dictionary<string, string> room_data = SHelper.GameContent.Load<Dictionary<string, string>>("Data\\SpouseRooms");
+            SMonitor.Log($"Data String: {spouse}");
+            // Changed from Data\\SpouseRooms to Data\\Characters
+            // I think this is supposed to use DataLoader but not sure what to pull where yet
+            // DataLoader.Characters(CharacterData);
+            Dictionary<string, string> room_data = SHelper.GameContent.Load<Dictionary<string, string>>("Data\\Characters");
 			string map_path = "spouseRooms";
-			if (indexInSpouseMapSheet == -1 && room_data != null && srd.templateName != null && room_data.ContainsKey(srd.templateName))
+            SMonitor.Log($"Data String: {map_path}");
+            if (indexInSpouseMapSheet == -1 && room_data != null && srd.templateName != null && room_data.ContainsKey(srd.templateName))
 			{
 				try
 				{
 					string[] array = room_data[srd.templateName].Split('/', StringSplitOptions.None);
 					map_path = array[0];
 					indexInSpouseMapSheet = int.Parse(array[1]);
-					SMonitor.Log($"Got Data\\SpouseRooms room for template {srd.templateName}: room {map_path}, index {indexInSpouseMapSheet}");
+					SMonitor.Log($"Got Data\\Characters room for template {srd.templateName}: room {map_path}, index {indexInSpouseMapSheet}");
 				}
 				catch (Exception)
 				{
@@ -316,7 +323,7 @@ namespace CustomSpouseRooms
 					string[] array = room_data[spouse].Split('/', StringSplitOptions.None);
 					map_path = array[0];
 					indexInSpouseMapSheet = int.Parse(array[1]);
-					SMonitor.Log($"Got Data\\SpouseRooms room for spouse {spouse}: room {map_path}, index {indexInSpouseMapSheet}");
+					SMonitor.Log($"Got Data\\Characters room for spouse {spouse}: room {map_path}, index {indexInSpouseMapSheet}");
 				}
 				catch (Exception)
 				{
@@ -448,7 +455,9 @@ namespace CustomSpouseRooms
                 {
                     if (Game1.random.NextDouble() < 0.1 && Game1.timeOfDay > 610)
                     {
-                        DelayedAction.playSoundAfterDelay("croak", 1000, null, -1);
+                        // Commented out original to get to run, need to debug still
+                        // DelayedAction.playSoundAfterDelay("croak", 1000, null, -1);
+                        DelayedAction.playSoundAfterDelay("croak", 1000);
                     }
                 }
             }
